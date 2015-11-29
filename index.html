@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>GitHub API</title>
+  </head>
+  <body>
+    <div id="github-module">
+      <h1>Github user Repos</h1>
+      <input type="text" name="name">
+      <button id="search-user" type="button" name="name" value="">Search Github User</button>
+
+
+      <div id="github-user-data">
+        <script id="github-user-template" type="text/template">
+          <h2 id="user">{{#user}}{{.}}'s Repositories{{/user}}</h2>
+          <ul id="repos">
+          {{#repos}}
+            <li><a href="{{html_url}}">{{name}}</a> type: {{language}}</li>
+          {{/repos}}
+          </ul>
+          <!-- <span>{{^repos}}No repos found for user {{user}}{{/repos}} </span> -->
+          <span>{{#error}}{{.}}{{/error}}</span>
+        </script>
+      </div>
+    </div>
+
+    <script type="text/javascript" src="bower_components/jquery/jquery.min.js"></script>
+    <script type="text/javascript" src="bower_components/mustache.js/mustache.min.js"></script>
+    <script type="text/javascript" src="bower_components/q/q.js"></script>
+    <script type="text/javascript" src="modules/github.js"></script>
+    </script>
+  </body>
+</html>

@@ -1,0 +1,23 @@
+{
+  "name": "modularscript",
+  "description": "",
+  "main": "index.js",
+  "authors": [
+    "paesku <paesku@gmail.com>"
+  ],
+  "license": "ISC",
+  "moduleType": [],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "mustache.js": "mustache#~2.2.0",
+    "q": "q#1.0.1",
+    "jquery": "components/jquery#~2.1.4"
+  }
+}
