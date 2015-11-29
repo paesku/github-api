@@ -4,12 +4,13 @@ var github = (function() {
   var user = 'paesku';
   var repos,
       error,
-      msg;
+      msg,
+      eventMessage;
 
   var API = 'http://api.github.com/users/';
 
   // TODO: OAUTH for more than 60 requests per hour
-  
+
   var $el = $('#github-module');
   var $btn = $el.find('button');
   var $input = $el.find('input');
@@ -35,11 +36,21 @@ var github = (function() {
   function searchUser(value) {
     var name = (typeof value === 'string') ? value : $input.val();
     user = name;
+
+    eventMessage = 'Searching GitHub for user: ' + user;
+
+    // Emit event
+    events.emit('statusSearchForUser', eventMessage);
+
     _checkUserName(user).then(function (res) {
       return res;
     }).then(function(res) {
       // only go on when user exists
       if (!res.message) {
+
+        eventMessage = 'Searching GitHub Repositories from user: ' + user;
+        // Update event
+        events.emit('statusSearchForUser', eventMessage);
         _getRepositories(user);
       }
     }).fail(function (res) {
@@ -81,6 +92,7 @@ var github = (function() {
         repos: repos,
         error: false
       });
+      fetchStatus.destroy();
     }).fail(function (xhr) {
       console.warn('Something went wrong: ' + xhr);
       _error('No Repo available');
