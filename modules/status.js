@@ -4,10 +4,18 @@ var fetchStatus = (function() {
   var $status = $('#status-module');
   var $template = $('#status-template').html();
 
-  //  bind event
-  events.on('statusSearchForUser', setStatus);
 
-  _render();
+
+  _init();
+
+  function _init() {
+    _attach();
+  }
+
+  function _attach() {
+    //  bind event
+    events.on('statusSearchForUser', setStatus);
+  }
 
   function _render() {
     $status.html(Mustache.render($template, {status: stat}));
@@ -18,6 +26,10 @@ var fetchStatus = (function() {
     _render();
   }
 
+  function detach() {
+    $status.detach();
+  }
+
   function destroy() {
     $status.remove();
     events.off('statusSearchForUser', setStatus);
@@ -26,5 +38,6 @@ var fetchStatus = (function() {
   return {
     setStatus: setStatus,
     destroy: destroy,
+    detach: detach,
   }
 })();

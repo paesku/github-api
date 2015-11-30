@@ -14,21 +14,19 @@
 
         <div id="github-user-data">
           <script id="github-user-template" type="text/template">
-            <h2 id="user">{{#user}}{{.}}'s Repositories{{/user}}</h2>
+            <h2 id="user">{{#user}}{{.}}'s public Repositories{{/user}}</h2>
             <ul id="repos">
             {{#repos}}
               <li><a href="{{html_url}}">{{name}}</a> type: {{language}}</li>
             {{/repos}}
             </ul>
-            <!-- <span>{{^repos}}No repos found for user {{user}}{{/repos}} </span> -->
-            <span>{{#error}}{{.}}{{/error}}</span>
           </script>
         </div>
       </div>
 
 
       <div id="status-module">
-        <h1>Status</h1>
+        <p>Status</p>
         <script id="status-template" type="text/template">
           {{#status}}
             <span>{{.}}</span>

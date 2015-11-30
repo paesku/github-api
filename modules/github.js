@@ -3,7 +3,6 @@
 var github = (function() {
   var user = 'paesku';
   var repos,
-      error,
       msg,
       eventMessage;
 
@@ -61,6 +60,18 @@ var github = (function() {
   };
 
   /*
+   * Get You GitHub API key
+   *
+   * @return {promise} Object – Promise
+   */
+  function _getAPIKey() {
+    return Q($.ajax({
+      dataType: 'json',
+      url: './',
+    }));
+  };
+
+  /*
    * Get Promis for a GitHub User
    *
    * @param {user} string – GitHub username
@@ -68,7 +79,7 @@ var github = (function() {
    */
   function _checkUserName(user) {
     var url = _buildURL(user, false);
-    return Q(jQuery.ajax({
+    return Q($.ajax({
       type: 'GET',
       url: url,
     }));
@@ -82,6 +93,7 @@ var github = (function() {
    */
   function _getRepositories(user) {
     var url = _buildURL(user, true);
+
     return Q(jQuery.ajax({
       type: 'GET',
       url: url,
@@ -90,9 +102,9 @@ var github = (function() {
       _render({
         user: user,
         repos: repos,
-        error: false
       });
-      fetchStatus.destroy();
+
+      events.emit('statusSearchForUser', '');
     }).fail(function (xhr) {
       console.warn('Something went wrong: ' + xhr);
       _error('No Repo available');
@@ -127,12 +139,8 @@ var github = (function() {
     } else {
       msg = err;
     }
-    error = 'There went something wrong with the request on GitHub. ' + msg;
-    _render({
-      user: false,
-      repos: false,
-      error: error
-    });
+    eventMessage = 'There went something wrong with the request on GitHub. ' + msg;
+    events.emit('statusSearchForUser', eventMessage);
   }
 
   /*
